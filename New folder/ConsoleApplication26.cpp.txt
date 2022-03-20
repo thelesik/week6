@@ -1,0 +1,75 @@
+#include <iostream>
+#include "Header.h"
+using namespace std;
+
+#define Gconst 0.00000000006673
+
+class Sphere
+{
+private:
+    double radius;
+
+public:
+
+    void SetR(double val) // mutator
+    {
+        radius = val;
+    }
+    double GetR() //accessor
+    {
+        return radius;
+    }
+    double SurfaceArea()
+    {
+        double area = 4 * (22.0 / 7) * GetR() * GetR();
+        return area;
+    }
+    double Volume()
+    {
+        double vol = (4.0 / 3) * (22.0 / 7) * GetR() * GetR() * GetR();
+        return vol;
+    }
+    Sphere() {}//constructor
+};
+
+class Planet : public Sphere
+{
+private:
+    double mass;
+
+public:
+
+    void SetM(double val)// mutator
+    {
+        mass = val;
+    }
+    double GetM()//accessor
+    {
+        return mass;
+    }
+    double Density()
+    {
+        double den = GetM() / Volume();
+        return den;
+    }
+    double Acceleration()
+    {
+        double grav = Gconst * GetM() / (GetR() * GetR()); // members of parent class
+        return grav;
+    }
+    Planet(){}//constructor
+};
+
+int main()
+{
+    double radius, mass;
+    Planet p;
+    radius = ReadValue <double>( "Enter radius of the planet : ");
+    mass = ReadValue <double>("Enter mass of the planet : ");
+    p.SetR(radius);
+    p.SetM(mass);
+    cout << "Surface Area is " << p.SurfaceArea() << endl;
+    cout << "Dencity is " << p.Density() << endl;
+    cout << "Acceleration is " << p.Acceleration() << endl;
+    return 0;
+}
